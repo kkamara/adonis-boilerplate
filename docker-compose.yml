@@ -1,0 +1,33 @@
+version: "3.7"
+
+services:
+  postgres:
+    container_name: adonis-db
+    image: postgres
+    environment:
+      POSTGRES_DB: '${PG_DB_NAME:-postgres}'
+      POSTGRES_USER: '${PG_USER:-postgres}'
+      POSTGRES_PASSWORD: '${PG_PASSWORD:-postgres}'
+    ports: 
+      - '${EXTERNAL_DB_PORT:-5432}:${CONTAINER_DB_PORT:-5432}'
+    volumes:
+      - db:/var/lib/postgresql/data
+    networks:
+      - my_network
+  app:
+    container_name: adonis-app
+    build:
+      context: .
+    depends_on:
+      - postgres
+    ports:
+      - '${EXTERNAL_APP_PORT:-3000}:${CONTAINER_APP_PORT:-3000}'
+    networks:
+      - my_network
+        
+volumes:
+  db:
+
+networks:
+    my_network:
+        driver: bridge
