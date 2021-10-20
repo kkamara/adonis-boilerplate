@@ -36,6 +36,9 @@ services:
       - postgres
     ports:
       - '${EXTERNAL_APP_PORT:-3000}:${CONTAINER_APP_PORT:-3000}'
+    working_dir: /app/
+    volumes:
+      - ./:/app
     networks:
       - my_network
         
