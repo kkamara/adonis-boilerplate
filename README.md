@@ -8,7 +8,7 @@ Boilerplate with the [adonis](https://adonisjs.com/) framework.
 
 ## Installation
 
-```
+```bash
 cp .env.example .env
 docker-compose build
 ```
@@ -17,14 +17,21 @@ docker-compose build
 
 Check your `.env` file to map ports to your containers.
 
-```
+```bash
 docker-compose up -d
 ```
 
 ## Run Database Migrations
 
-```
+```bash
 docker exec ${APP_CONTAINER_ID} node ace migration:run
+```
+
+## Run pgAdmin
+
+```bash
+sudo apt-get install -y exo-utils && \
+    exo-open http://localhost:8000
 ```
 
 ## Contributing
