@@ -1,6 +1,20 @@
-version: "3.7"
+version: "3.9"
 
 services:
+  pgadmin:
+    container_name: pgadmin4_container
+    image: dpage/pgadmin4:6.0
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: '${PGA_LOGIN:-admin@test.com}'
+      PGADMIN_DEFAULT_PASSWORD: '${PGA_PASS:-secret}'
+      PGADMIN_LISTEN_PORT: '${CONTAINER_PGA_PORT:-8000}'
+    ports:
+      - '${EXTERNAL_PGA_PORT:-8000}:${CONTAINER_PGA_PORT:-8000}'
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    networks:
+      - my_network
   postgres:
     container_name: adonis-db
     image: postgres
@@ -27,6 +41,7 @@ services:
         
 volumes:
   db:
+  pgadmin-data:
 
 networks:
     my_network:
